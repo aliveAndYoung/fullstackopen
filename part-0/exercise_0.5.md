@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant Browser
     participant Server
@@ -14,4 +15,4 @@ sequenceDiagram
 
     Browser->>Server:  GET https://fullstack-exampleapp.herokuapp.com/data.json
     Server-->>Browser: JSON data: [{content: "fetchedMesssages", date: "2025-01-18"}, ...]
-
+```

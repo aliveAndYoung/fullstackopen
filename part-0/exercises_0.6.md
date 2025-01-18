@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant Browser
     participant Server
@@ -7,3 +8,4 @@ sequenceDiagram
     Server-->>Browser: 201 Created
 
     Note over Browser: Browser uses the event handler and renders updated notes to display
+```
