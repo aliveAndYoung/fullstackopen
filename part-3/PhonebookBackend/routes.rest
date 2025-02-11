@@ -1,6 +1,6 @@
 GET http://localhost:3001/api/persons
 ### get all Persons 
-GET http://fullstackopen.zeabur.internal:8080
+GET http://tryy.zeabur.app/api/persons
 ### get all Persons 
 GET http://localhost:3001/info
 ### get numper of entries
