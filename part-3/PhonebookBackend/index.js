@@ -2,6 +2,8 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
+const Person = require("./models/person");
+require("dotenv").config();
 
 morgan.token("custom", (req, res) => {
     return `${
@@ -12,7 +14,6 @@ morgan.token("custom", (req, res) => {
 });
 
 app.use(express.static("dist"));
-
 app.use(express.json());
 app.use(
     morgan(
@@ -48,54 +49,103 @@ const newID = () => {
     return id;
 };
 
-const isDuplicate = (item, array) => {
-    return array.reduce((cumm, curr) => cumm || item.name === curr.name, false);
-};
-
 app.get("/api/persons", (req, res) => {
-    res.json(Persons);
+    Person.find({}).then((result) => {
+        res.json(result);
+    });
 });
 
-app.get("/info", (req, res) => {
-    res.send(`
-        <p> Phonebook has info for ${Persons.length} people </p>
+app.get("/info", async (req, res) => {
+    try {
+        const count = await Person.countDocuments({});
+        res.send(`
+        <p> Phonebook has info for ${count} people </p>
         <p>${new Date()}</p>
         `);
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 app.get("/api/persons/:id", (req, res) => {
-    const id = req.params.id;
-    const person = Persons.find((p) => p.id === id);
-    if (person) {
-        res.json(person);
-    } else {
-        res.status(404).end();
-    }
+    let id = req.params.id;
+    Person.findById(id).then((result) => {
+        res.json(result);
+    });
 });
 
 app.delete("/api/persons/:id", (req, res) => {
     let id = req.params.id;
-    let deletedPerson = Persons.find((p) => p.id === id);
-    Persons = Persons.filter((p) => p.id !== id);
-    res.json(deletedPerson);
+    Person.findByIdAndDelete(id).then((result) => {
+        res.json(result);
+    });
 });
 
-app.post("/api/persons", (req, res) => {
-    let toBeAdded = req.body;
-    if (toBeAdded.name && toBeAdded.number) {
-        if (isDuplicate(toBeAdded, Persons)) {
-            res.status(409).json({ error: "name must be unique" }).end();
+app.post("/api/persons", async (req, res) => {
+    const toBeAdded = req.body;
+
+    try {
+        const isDuplicate = await Person.findOne({ name: toBeAdded.name });
+
+        if (isDuplicate) {
+            const updatedDocument = await Person.findOneAndUpdate(
+                { name: toBeAdded.name },
+                { number: toBeAdded.number },
+                { new: true }
+            );
+
+            if (updatedDocument) {
+                console.log("Document found and updated:", updatedDocument);
+                res.json(updatedDocument);
+            } else {
+                console.log("No document found matching the criteria");
+                res.status(404).json({ error: "Document not found" });
+            }
         } else {
-            toBeAdded.id = newID();
-            Persons = [...Persons, toBeAdded];
-            res.json(toBeAdded);
+            if (toBeAdded.name && toBeAdded.number) {
+                const person = new Person(toBeAdded);
+                const savedDocument = await person.save();
+                res.json(savedDocument);
+            } else {
+                res.status(400).json({ error: "Name or number missing" });
+            }
         }
-    } else {
-        res.status(400).json({
-            error: "name or number missing",
-        });
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
+
+app.put("/api/persons/:id", (req, res) => {
+    const id = req.params.id;
+    const updatedPerson = req.body;
+    Person.findByIdAndUpdate(id, updatedPerson, { new: true })
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: "Internal server error" });
+        });
+});
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(unknownEndpoint);
+
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message);
+
+    if (error.name === "CastError") {
+        return response.status(400).send({ error: "malformatted id" });
+    }
+
+    next(error);
+};
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

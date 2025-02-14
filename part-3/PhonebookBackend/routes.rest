@@ -1,18 +1,41 @@
+
+
 GET http://localhost:3001/api/persons
 ### get all Persons 
+
+
 GET http://tryy.zeabur.app/api/persons
 ### get all Persons 
+
+
 GET http://localhost:3001/info
 ### get numper of entries
-GET http://localhost:3001/api/persons/2
+
+
+GET http://localhost:3001/api/persons/67aea480fb945965697cd37b
 ### get a specific individual 
-DELETE http://localhost:3001/api/persons/9034
+
+
+DELETE http://localhost:3001/api/persons/67ae9e04682bc68668d8e345
 ### delete a single person
+
+
 POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name" : "Youssef",
-    "number" : "01015582672"
+    "name" : "fatma", 
+    "number" : "as long as she stayed"
 }
 ### add a new person
+
+
+PUT http://localhost:3001/api/persons/67aea0b96141403c22779610
+Content-Type: application/json
+
+{
+    "name" : "fatma", 
+    "number" : "the put update"
+}
+
+### update by put
