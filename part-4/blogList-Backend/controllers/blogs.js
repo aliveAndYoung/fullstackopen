@@ -1,61 +1,80 @@
-const router = require('express').Router()
-const Blog = require('../models/blog')
-const mongoose = require('mongoose')
+const router = require("express").Router();
+const Blog = require("../models/blog");
+const User = require("../models/user");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
-router.get('/', async (req, res) => {
-  const blogs = await Blog.find({})
-  res.json(blogs)
-})
+router.get("/", async (req, res) => {
+    const blogs = await Blog.find({}).populate("user", {
+        username: 1,
+        name: 1,
+        id: 1,
+    });
+    res.json(blogs);
+});
 
-router.post('/', async (req, res) => {
-  const body = req.body
+router.post("/", async (req, res) => {
+    const body = request.body;
 
-  if (!body.title || !body.url) {
-    return res.status(400).json({ error: 'Title or URL missing' })
-  }
+    if (!request.user) {
+        return response.status(401).json({ error: "token missing or invalid" });
+    }
 
-  const blog = new Blog({
-    title: body.title,
-    author: body.author,
-    url: body.url,
-    likes: body.likes || 0
-  })
+    const blog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes || 0,
+        user: request.user._id,
+    });
 
-  const savedBlog = await blog.save()
-  res.status(201).json(savedBlog)
-})
+    const savedBlog = await blog.save();
+    request.user.blogs = request.user.blogs.concat(savedBlog._id);
+    await request.user.save();
 
-router.delete('/:id', async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(400).json({ error: 'Invalid ID format' })
-  }
+    response.status(201).json(savedBlog);
 
-  const blog = await Blog.findByIdAndDelete(req.params.id)
-  
-  if (!blog) {
-    return res.status(404).json({ error: 'Blog not found' })
-  }
+    res.status(201).json(savedBlog);
+});
 
-  res.status(204).end()
-})
+router.delete("/:id", async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ error: "Invalid ID format" });
+    }
 
-router.put('/:id', async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(400).json({ error: 'Invalid ID format' })
-  }
+    const blog = await Blog.findById(request.params.id);
 
-  const { likes } = req.body
-  const updatedBlog = await Blog.findByIdAndUpdate(
-    req.params.id,
-    { likes },
-    { new: true, runValidators: true }
-  )
+    if (!blog) {
+        return response.status(404).end();
+    }
 
-  if (!updatedBlog) {
-    return res.status(404).json({ error: 'Blog not found' })
-  }
+    if (blog.user.toString() !== request.user._id.toString()) {
+        return response.status(403).json({
+            error: "only the creator can delete this blog",
+        });
+    }
 
-  res.json(updatedBlog)
-})
+    await Blog.findByIdAndDelete(request.params.id);
+    response.status(204).end();
+});
 
-module.exports = router
+router.put("/:id", async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ error: "Invalid ID format" });
+    }
+
+    const { likes } = req.body;
+    const updatedBlog = await Blog.findByIdAndUpdate(
+        req.params.id,
+        { likes },
+        { new: true, runValidators: true }
+    );
+
+    if (!updatedBlog) {
+        return res.status(404).json({ error: "Blog not found" });
+    }
+
+    res.json(updatedBlog);
+});
+
+module.exports = router;

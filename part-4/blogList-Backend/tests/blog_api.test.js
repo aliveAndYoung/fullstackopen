@@ -13,6 +13,21 @@ describe("when there is initially some blogs saved", () => {
         await Blog.insertMany(helper.initialBlogs);
     });
 
+    describe("/api/users", () => {
+        test('creation fails with short password', async () => {
+            const newUser = {
+              username: 'mluukkai',
+              name: 'Matti Luukkainen',
+              password: 'sa'
+            };
+          
+            await api
+              .post('/api/users')
+              .send(newUser)
+              .expect(400)
+              .expect({ error: 'Password must be at least 3 characters' });
+          });
+    });
     describe("GET /api/blogs", () => {
         test("returns blogs as json", async () => {
             await api
