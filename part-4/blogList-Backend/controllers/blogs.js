@@ -14,25 +14,19 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const body = request.body;
-
-    if (!request.user) {
-        return response.status(401).json({ error: "token missing or invalid" });
-    }
+    const body = req.body;
 
     const blog = new Blog({
         title: body.title,
         author: body.author,
         url: body.url,
         likes: body.likes || 0,
-        user: request.user._id,
+        user: req.user.id,
     });
 
     const savedBlog = await blog.save();
-    request.user.blogs = request.user.blogs.concat(savedBlog._id);
-    await request.user.save();
-
-    response.status(201).json(savedBlog);
+    req.user.blogs = req.user.blogs.concat(savedBlog._id);
+    await req.user.save();
 
     res.status(201).json(savedBlog);
 });

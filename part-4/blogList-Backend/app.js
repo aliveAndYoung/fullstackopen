@@ -28,6 +28,7 @@ app.use(
     middleware.userExtractor,
     blogsRouter
 );
+
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 
