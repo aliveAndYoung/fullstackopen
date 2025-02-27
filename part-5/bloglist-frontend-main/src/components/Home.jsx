@@ -2,19 +2,47 @@ import React, { useEffect, useState } from "react";
 import blogService from "../services/blogs";
 import Blog from "./Blog";
 
-const Home = ({ handelLogout, user, blogs, setBlogs }) => {
+const Home = ({ handelLogout, user, blogs, setBlogs, setNotification }) => {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [url, setUrl] = useState("");
     const handelNewBlog = async (event) => {
-        event.preventDefault();
-        const newBlog = { title, author, url };
-        await blogService.create(newBlog, user.token);
-        setTitle("");
-        setAuthor("");
-        setUrl("");
-        setBlogs(blogs.concat(newBlog));
-        console.log(blogs);
+        try {
+            event.preventDefault();
+            const newBlog = { title, author, url };
+            await blogService.create(newBlog, user.token);
+            setTitle("");
+            setAuthor("");
+            setUrl("");
+            const upadtedBlogList = await blogService.getAll(user.token);
+            setBlogs(upadtedBlogList);
+            setNotification({
+                message: `a new blog ${title} by ${author} added`,
+                isError: false,
+            });
+            setTimeout(
+                () =>
+                    setNotification({
+                        message: null,
+                        isError: false,
+                    }),
+                5000
+            );
+        } catch (err) {
+            console.log(err);
+            setNotification({
+                message: err.response.data.error,
+                isError: true,
+            });
+            setTimeout(
+                () =>
+                    setNotification({
+                        message: null,
+                        isError: false,
+                    }),
+                5000
+            );
+        }
     };
 
     useEffect(() => {

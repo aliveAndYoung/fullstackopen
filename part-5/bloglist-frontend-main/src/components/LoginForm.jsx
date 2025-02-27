@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { login } from "../services/Login";
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = ({ setUser, setNotification }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const saveLocally = (user) => {
@@ -10,17 +10,57 @@ const LoginForm = ({ setUser }) => {
     };
 
     const handelSubmit = async (event) => {
-        event.preventDefault();
-        let theUser = { username: username, password: password };
-        const isUser = await login(theUser);
+        try {
+            event.preventDefault();
+            let theUser = { username: username, password: password };
+            const isUser = await login(theUser);
 
-        if (isUser && isUser.username && isUser.name && isUser.token) {
-            setUsername("");
-            setPassword("");
-            setUser(isUser);
-            saveLocally(isUser);
-        } else {
-            console.log("Wrong username or password");
+            if (isUser && isUser.username && isUser.name && isUser.token) {
+                setUsername("");
+                setPassword("");
+                setUser(isUser);
+                saveLocally(isUser);
+                setNotification({
+                    message: `Welcome ${isUser.name}`,
+                    isError: false,
+                });
+                setTimeout(
+                    () =>
+                        setNotification({
+                            message: null,
+                            isError: false,
+                        }),
+                    5000
+                );
+            } else {
+                console.log("Wrong username or password");
+                setNotification({
+                    message: "Wrong username or password",
+                    isError: true,
+                });
+                setTimeout(
+                    () =>
+                        setNotification({
+                            message: null,
+                            isError: false,
+                        }),
+                    5000
+                );
+            }
+        } catch (err) {
+            console.log(err);
+            setNotification({
+                message: err.response.data.error,
+                isError: true,
+            });
+            setTimeout(
+                () =>
+                    setNotification({
+                        message: null,
+                        isError: false,
+                    }),
+                5000
+            );
         }
     };
     return (
