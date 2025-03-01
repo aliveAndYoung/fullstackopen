@@ -34,8 +34,8 @@ router.post("/", async (req, res) => {
     res.status(201).json(savedBlog);
 });
 
-router.delete("/:id", async (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+router.delete("/:id", async (request, response) => {
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
         return res.status(400).json({ error: "Invalid ID format" });
     }
 
@@ -52,7 +52,7 @@ router.delete("/:id", async (req, res) => {
     }
 
     await Blog.findByIdAndDelete(request.params.id);
-    response.status(204).end();
+    response.status(204).json({ message: "blog deleted" });
 });
 
 router.put("/:id", async (req, res) => {
@@ -60,15 +60,14 @@ router.put("/:id", async (req, res) => {
         return res.status(400).json({ error: "Invalid ID format" });
     }
 
-    const { likes } = req.body;
     const updatedBlog = await Blog.findByIdAndUpdate(
         req.params.id,
-        { likes },
+        { $inc: { likes: 1 } },
         { new: true, runValidators: true }
     );
 
     if (!updatedBlog) {
-        return res.status(404).json({ error: "Blog not found" });
+        return res.status(404).end();
     }
 
     res.json(updatedBlog);

@@ -29,7 +29,7 @@ const Home = ({ user, setUser, setNotification }) => {
             let theNewBlog = await blogService.create(newBlog, user.token);
 
             const upadtedBlogList = blogs.concat(theNewBlog);
-            setBlogs(upadtedBlogList);
+            setBlogs(sortBlogsByLikes(upadtedBlogList));
             setNotification({
                 message: `a new blog ${theNewBlog.title} by ${theNewBlog.author} added`,
                 isError: false,
@@ -62,8 +62,79 @@ const Home = ({ user, setUser, setNotification }) => {
         }
     };
 
+    const handelLikes = async (theID) => {
+        try {
+            const updatedBlog = await blogService.incrementLikes(
+                theID,
+                user.token
+            );
+
+            if (updatedBlog.id) {
+                const updatedBlog = await blogService.getAll(user.token);
+                setBlogs(sortBlogsByLikes(updatedBlog));
+            } else {
+                console.log(updatedBlog);
+            }
+            console.log(updatedBlog);
+        } catch (err) {
+            console.log(err);
+            setNotification({
+                message: err.response?.data?.error || "Failed to update likes",
+                isError: true,
+            });
+            setTimeout(
+                () =>
+                    setNotification({
+                        message: null,
+                        isError: false,
+                    }),
+                5000
+            );
+        }
+    };
+
+    const handelBlogDeletion = async (theID) => {
+        try {
+            await blogService.deleteBlog(theID, user.token);
+            const updatedBlogList = await blogService.getAll(user.token);
+            setBlogs(sortBlogsByLikes(updatedBlogList));
+            setNotification({
+                message: "Blog deleted",
+                isError: false,
+            });
+            setTimeout(
+                () =>
+                    setNotification({
+                        message: null,
+                        isError: false,
+                    }),
+                5000
+            );
+        } catch (err) {
+            console.log(err);
+            setNotification({
+                message: err.response?.data?.error || "Failed to delete blog",
+                isError: true,
+            });
+            setTimeout(
+                () =>
+                    setNotification({
+                        message: null,
+                        isError: false,
+                    }),
+                5000
+            );
+        }
+    };
+
+    function sortBlogsByLikes(blogs) {
+        return blogs.slice().sort((a, b) => b.likes - a.likes);
+    }
+
     useEffect(() => {
-        blogService.getAll(user.token).then((blogs) => setBlogs(blogs));
+        blogService
+            .getAll(user.token)
+            .then((blogs) => setBlogs(sortBlogsByLikes(blogs)));
     }, []);
 
     return (
@@ -78,7 +149,12 @@ const Home = ({ user, setUser, setNotification }) => {
             </Togglable>
 
             {blogs.map((blog) => (
-                <Blog key={blog.id} blog={blog} />
+                <Blog
+                    key={blog.id}
+                    blog={blog}
+                    handelLikes={handelLikes}
+                    handelBlogDeletion={handelBlogDeletion}
+                />
             ))}
         </div>
     );
