@@ -27,6 +27,9 @@ router.post("/", async (req, res) => {
     const savedBlog = await blog.save();
     req.user.blogs = req.user.blogs.concat(savedBlog._id);
     await req.user.save();
+    if (!savedBlog) {
+        return res.status(400).json({ error: "Blog not saved" });
+    }
 
     res.status(201).json(savedBlog);
 });

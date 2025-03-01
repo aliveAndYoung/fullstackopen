@@ -4,7 +4,6 @@ import LoginForm from "./components/LoginForm";
 import Home from "./components/Home";
 
 const App = () => {
-    const [blogs, setBlogs] = useState([]);
     const [user, setUser] = useState(null);
     const [notification, setNotification] = useState({
         message: null,
@@ -16,21 +15,6 @@ const App = () => {
         return loggedUserJSON;
     };
 
-    const handelLogout = () => {
-        window.localStorage.removeItem("user");
-        setUser(null);
-        setBlogs([]);
-        setNotification({ message: "You are logged out", isError: false });
-        setTimeout(
-            () =>
-                setNotification({
-                    message: null,
-                    isError: false,
-                }),
-            5000
-        );
-    };
-
     useEffect(() => {
         let currUser = isLoggedIn();
         currUser !== "notFound" && setUser(currUser);
@@ -40,13 +24,7 @@ const App = () => {
         <div>
             <Notification notification={notification} />
             {user ? (
-                <Home
-                    handelLogout={handelLogout}
-                    user={user}
-                    blogs={blogs}
-                    setBlogs={setBlogs}
-                    setNotification={setNotification}
-                />
+                <Home user={user} setUser={setUser} setNotification={setNotification} />
             ) : (
                 <LoginForm
                     setUser={setUser}

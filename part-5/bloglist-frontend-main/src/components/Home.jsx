@@ -1,25 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import blogService from "../services/blogs";
 import Blog from "./Blog";
+import BlogForm from "./BlogForm";
+import Togglable from "./Togglable";
 
-const Home = ({ handelLogout, user, blogs, setBlogs, setNotification }) => {
-    const [title, setTitle] = useState("");
-    const [author, setAuthor] = useState("");
-    const [url, setUrl] = useState("");
-    const handelNewBlog = async (event) => {
+const Home = ({ user, setUser, setNotification }) => {
+    const [blogs, setBlogs] = useState([]);
+
+    let ref = useRef();
+
+    const handelLogout = () => {
+        window.localStorage.removeItem("user");
+        setUser(null);
+        setBlogs([]);
+        setNotification({ message: "You are logged out", isError: false });
+        setTimeout(
+            () =>
+                setNotification({
+                    message: null,
+                    isError: false,
+                }),
+            5000
+        );
+    };
+
+    const handelNewBlog = async (newBlog) => {
         try {
-            event.preventDefault();
-            const newBlog = { title, author, url };
-            await blogService.create(newBlog, user.token);
-            setTitle("");
-            setAuthor("");
-            setUrl("");
-            const upadtedBlogList = await blogService.getAll(user.token);
+            let theNewBlog = await blogService.create(newBlog, user.token);
+
+            const upadtedBlogList = blogs.concat(theNewBlog);
             setBlogs(upadtedBlogList);
             setNotification({
-                message: `a new blog ${title} by ${author} added`,
+                message: `a new blog ${theNewBlog.title} by ${theNewBlog.author} added`,
                 isError: false,
             });
+
             setTimeout(
                 () =>
                     setNotification({
@@ -31,7 +46,7 @@ const Home = ({ handelLogout, user, blogs, setBlogs, setNotification }) => {
         } catch (err) {
             console.log(err);
             setNotification({
-                message: err.response.data.error,
+                message: err.response,
                 isError: true,
             });
             setTimeout(
@@ -42,6 +57,8 @@ const Home = ({ handelLogout, user, blogs, setBlogs, setNotification }) => {
                     }),
                 5000
             );
+        } finally {
+            ref.current.toggleVisibility();
         }
     };
 
@@ -56,35 +73,9 @@ const Home = ({ handelLogout, user, blogs, setBlogs, setNotification }) => {
                 Logged in as {user.name}
                 <button onClick={() => handelLogout()}>logout</button>
             </h4>
-            <h2>create new</h2>
-
-            <form onSubmit={handelNewBlog}>
-                <div>
-                    title:
-                    <input
-                        name="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                </div>
-                <div>
-                    author:
-                    <input
-                        name="author"
-                        value={author}
-                        onChange={(e) => setAuthor(e.target.value)}
-                    />
-                </div>
-                <div>
-                    url:
-                    <input
-                        name="url"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                    />
-                </div>
-                <button type="submit">create</button>
-            </form>
+            <Togglable buttonLabel="Add New Blog" ref={ref}>
+                <BlogForm handelNewBlog={handelNewBlog} />
+            </Togglable>
 
             {blogs.map((blog) => (
                 <Blog key={blog.id} blog={blog} />
