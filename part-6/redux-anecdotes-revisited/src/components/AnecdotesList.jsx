@@ -3,7 +3,13 @@ import Anecdote from "./Anecdote";
 import { useSelector } from "react-redux";
 
 const AnecdotesList = () => {
-    const currList = useSelector((state) => state);
+    const StartWith = (anecdote, filter) => {
+        return anecdote.content.toLowerCase().startsWith(filter.toLowerCase());
+    };
+
+    const currList = useSelector(({ anecdotes, filter }) =>
+        anecdotes.filter((anecdote) => StartWith(anecdote, filter))
+    );
     const sortedList = currList.sort((a, b) => b.votes - a.votes);
 
     return (
