@@ -1,16 +1,18 @@
 import React from "react";
 import Anecdote from "./Anecdote";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 
 const AnecdotesList = () => {
     const StartWith = (anecdote, filter) => {
         return anecdote.content.toLowerCase().startsWith(filter.toLowerCase());
     };
 
-    const currList = useSelector(({ anecdotes, filter }) =>
-        anecdotes.filter((anecdote) => StartWith(anecdote, filter))
+    const currList = useSelector(
+        ({ anecdotes, filter }) =>
+            anecdotes.filter((anecdote) => StartWith(anecdote, filter)),
+        shallowEqual
     );
-    const sortedList = currList.sort((a, b) => b.votes - a.votes);
+    const sortedList = [...currList].sort((a, b) => b.votes - a.votes);
 
     return (
         <div>
