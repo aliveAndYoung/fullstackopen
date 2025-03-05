@@ -11,8 +11,10 @@ const createNew = async (content) => {
     return response.data;
 };
 
-// const vote = async (id) => {
-//     const response = await axios.put(`${baseURL}/${id}`  );
-//     return response.data;
-// };
-export default { getAll, createNew };
+const vote = async (id, votess) => {
+    const response = await axios.patch(`${baseURL}/${id}`, {
+        votes: votess,
+    });
+    return response.data;
+};
+export default { getAll, createNew, vote };
