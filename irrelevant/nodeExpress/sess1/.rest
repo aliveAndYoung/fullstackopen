@@ -1,0 +1,13 @@
+GET http://localhost:3000/
+###
+
+GET http://localhost:3000/home
+###
+
+
+GET http://localhost:3000/api/courses
+###
+
+
+GET http://localhost:3000/api/courses/1
+###

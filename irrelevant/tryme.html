@@ -1,0 +1,515 @@
+<html>
+    <!-- Perl script written by Richard Tervo, March 1999 -->
+    <!-- FEN 1B1K4/2b5/8/8/R3R2P/5k2/N3R1r1/1r2RR2 -->
+    <head>
+        <title>FEN Display Tool</title>
+    </head>
+    <body bgcolor="#F0F0F0">
+        <!-- <table border="0" width="100%">
+            <tr>
+                <td>
+                    <font size="+3" color="#0000FF"
+                        >Online FEN Display Tool</font
+                    >
+                </td>
+
+                <td align="right">
+                    <a href="http://www.ee.unb.ca/tervo/perl.html"
+                        ><img
+                            src="http://www.ee.unb.ca/tervo/cgi/arrow2.gif"
+                            height="24"
+                            width="32"
+                            border="0"
+                            align="middle"
+                        />Home</a
+                    >
+                </td>
+            </tr>
+        </table> -->
+
+        <hr />
+        <p>
+            <center>
+                <table border="1" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WBX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WKX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/BBX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WRX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WRX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WPX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/BKX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WNY.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WRX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/BRX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/BRX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WRX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/WRX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#A57B5A">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                    <td bgcolor="#E7CEA5">
+                                        <img
+                                            src="http://www.ee.unb.ca/tervo/cgi/chess/2/OOX.GIF"
+                                            height="35"
+                                            width="35"
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </p>
+    </body>
+</html>
